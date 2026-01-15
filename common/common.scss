@@ -3,6 +3,29 @@
   max-width: 600px;
   margin: 20px 0;
   padding: 0;
+
+  // Style the Marketo submit button
+  .mktoForm {
+    .mktoButton {
+      background: var(--tertiary) !important;
+      color: var(--secondary) !important;
+      border-radius: 25px !important;
+      border: none !important;
+      cursor: pointer;
+      padding: 0.75em 2.5em;
+      font-size: 1.125em;
+      font-weight: 600;
+      transition: background 0.15s;
+
+      &:hover {
+        background: var(--tertiary-hover) !important;
+      }
+
+      &:active {
+        background: var(--tertiary-high) !important;
+      }
+    }
+  }
 }
 
 // Lightbox button styling

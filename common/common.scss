@@ -34,6 +34,7 @@
       color: var(--primary) !important;
       font-family: var(--font-family) !important;
       font-size: 16px !important;
+      margin-bottom: 0 !important;
     }
 
     // Style paragraph text specifically (subtext below form) - Syne 16px
@@ -42,7 +43,7 @@
       font-family: var(--font-family) !important;
       font-size: 16px !important;
       margin-top: 0.5em !important;
-      margin-bottom: 0.5em !important;
+      margin-bottom: 0.25em !important;
     }
 
     // Style error messages
@@ -71,7 +72,7 @@
     // Center the button row
     .mktoButtonRow {
       text-align: center !important;
-      margin-top: 0.5em !important;
+      margin-top: 0 !important;
     }
 
     // Style the submit button

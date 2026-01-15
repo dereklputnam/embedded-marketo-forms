@@ -68,7 +68,8 @@ function initializeMarketoForms(api) {
       console.log('[Marketo Forms] Processing element:', element.innerHTML);
 
       // First, parse BBCode-style tags [marketo-form id=1309]
-      const regex = /\[marketo-form\s+id=(\d+)(?:\s+lightbox=(true|false))?(?:\s+button="([^"]*)")?(?:\s+pdf="([^"]*)")?\]/gi;
+      // Support both regular quotes and HTML-encoded quotes, and optional quotes around values
+      const regex = /\[marketo-form\s+id=(\d+)(?:\s+lightbox=(true|false))?(?:\s+button=(?:"([^"]*)"|'([^']*)'|([^\s\]]+)))?(?:\s+pdf=(?:"([^"]*)"|'([^']*)'|([^\s\]]+)))?\]/gi;
 
       // Search for the pattern in all text nodes
       const walker = document.createTreeWalker(
@@ -102,8 +103,10 @@ function initializeMarketoForms(api) {
 
           const formId = match[1];
           const lightbox = match[2] === 'true';
-          const buttonText = match[3] || 'Open Form';
-          const pdfUrl = match[4] || '';
+          // Button text can be in match[3] (double quotes), match[4] (single quotes), or match[5] (no quotes)
+          const buttonText = match[3] || match[4] || match[5] || 'Open Form';
+          // PDF URL can be in match[6] (double quotes), match[7] (single quotes), or match[8] (no quotes)
+          const pdfUrl = match[6] || match[7] || match[8] || '';
 
           // Add text before the match
           if (match.index > lastIndex) {

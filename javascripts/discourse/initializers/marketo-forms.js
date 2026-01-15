@@ -60,17 +60,47 @@ function initializeMarketoForms(api) {
       const element = $elem[0];
 
       // First, parse BBCode-style tags [marketo-form id=1309]
-      const paragraphs = element.querySelectorAll('p');
-      paragraphs.forEach(p => {
-        const text = p.textContent || '';
-        const regex = /\[marketo-form\s+id=(\d+)(?:\s+lightbox=(true|false))?(?:\s+button="([^"]*)")?(?:\s+pdf="([^"]*)")?\]/g;
+      const regex = /\[marketo-form\s+id=(\d+)(?:\s+lightbox=(true|false))?(?:\s+button="([^"]*)")?(?:\s+pdf="([^"]*)")?\]/gi;
 
-        let match = regex.exec(text);
-        if (match) {
+      // Search for the pattern in all text nodes
+      const walker = document.createTreeWalker(
+        element,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+      );
+
+      const textNodesToProcess = [];
+      let node;
+      while (node = walker.nextNode()) {
+        if (regex.test(node.textContent)) {
+          textNodesToProcess.push(node);
+        }
+        regex.lastIndex = 0; // Reset regex
+      }
+
+      console.log('[Marketo Forms] Found text nodes to process:', textNodesToProcess.length);
+
+      textNodesToProcess.forEach(textNode => {
+        const text = textNode.textContent;
+        regex.lastIndex = 0; // Reset regex
+
+        let match;
+        const fragments = [];
+        let lastIndex = 0;
+
+        while ((match = regex.exec(text)) !== null) {
+          console.log('[Marketo Forms] Found match:', match);
+
           const formId = match[1];
           const lightbox = match[2] === 'true';
           const buttonText = match[3] || 'Open Form';
           const pdfUrl = match[4] || '';
+
+          // Add text before the match
+          if (match.index > lastIndex) {
+            fragments.push(document.createTextNode(text.substring(lastIndex, match.index)));
+          }
 
           // Create container div
           const container = document.createElement('div');
@@ -81,24 +111,49 @@ function initializeMarketoForms(api) {
           container.dataset.pdfUrl = pdfUrl;
           container.id = `marketo-form-container-${formId}-${Date.now()}`;
 
-          // Replace the paragraph with the container
-          p.replaceWith(container);
+          console.log('[Marketo Forms] Created container for form:', formId, 'with PDF:', pdfUrl);
+
+          fragments.push(container);
+          lastIndex = regex.lastIndex;
+        }
+
+        // Add remaining text
+        if (lastIndex < text.length) {
+          fragments.push(document.createTextNode(text.substring(lastIndex)));
+        }
+
+        // Replace the text node with fragments
+        if (fragments.length > 0) {
+          const parent = textNode.parentNode;
+          fragments.forEach(fragment => {
+            parent.insertBefore(fragment, textNode);
+          });
+          parent.removeChild(textNode);
         }
       });
 
       // Now find and initialize all marketo-form elements
       const marketoFormElements = element.querySelectorAll('.marketo-form');
 
+      console.log('[Marketo Forms] Found form elements:', marketoFormElements.length);
+
       if (marketoFormElements.length === 0) return;
 
       // Wait for MktoForms2 to be available
       const initForms = (attempts = 0) => {
         if (typeof window.MktoForms2 !== 'undefined') {
+          console.log('[Marketo Forms] MktoForms2 library loaded, initializing forms');
           marketoFormElements.forEach(formContainer => {
             const formId = parseInt(formContainer.dataset.formId);
             const isLightbox = formContainer.dataset.lightbox === 'true';
+            const pdfUrl = formContainer.dataset.pdfUrl;
 
-            if (!formId || formContainer.dataset.marketoLoaded === 'true') return;
+            console.log('[Marketo Forms] Processing form:', formId, 'lightbox:', isLightbox, 'pdf:', pdfUrl);
+
+            if (!formId || formContainer.dataset.marketoLoaded === 'true') {
+              console.log('[Marketo Forms] Skipping form (no ID or already loaded)');
+              return;
+            }
 
             // Create form container if it doesn't exist
             if (!formContainer.querySelector('form')) {

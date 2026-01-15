@@ -13,16 +13,19 @@
       border: none !important;
       cursor: pointer;
       padding: 0.75em 2.5em;
-      font-size: 1.125em;
-      font-weight: 600;
+      font-size: 1em;
+      font-weight: 400;
       transition: background 0.15s;
+      box-shadow: none !important;
 
       &:hover {
         background: var(--tertiary-hover) !important;
+        box-shadow: none !important;
       }
 
       &:active {
         background: var(--tertiary-high) !important;
+        box-shadow: none !important;
       }
     }
   }

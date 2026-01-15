@@ -8,26 +8,52 @@ function initializeMarketoForms(api) {
     ($elem) => {
       if (!$elem || !$elem[0]) return;
 
-      // Find all marketo-form elements
-      const marketoFormElements = $elem[0].querySelectorAll('.marketo-form');
+      const element = $elem[0];
+
+      // First, parse BBCode-style tags [marketo-form id=1309]
+      const paragraphs = element.querySelectorAll('p');
+      paragraphs.forEach(p => {
+        const text = p.textContent || '';
+        const regex = /\[marketo-form\s+id=(\d+)(?:\s+lightbox=(true|false))?(?:\s+button="([^"]*)")?\]/g;
+
+        let match = regex.exec(text);
+        if (match) {
+          const formId = match[1];
+          const lightbox = match[2] === 'true';
+          const buttonText = match[3] || 'Open Form';
+
+          // Create container div
+          const container = document.createElement('div');
+          container.className = 'marketo-form';
+          container.dataset.formId = formId;
+          container.dataset.lightbox = lightbox;
+          container.dataset.buttonText = buttonText;
+          container.id = `marketo-form-container-${formId}-${Date.now()}`;
+
+          // Replace the paragraph with the container
+          p.replaceWith(container);
+        }
+      });
+
+      // Now find and initialize all marketo-form elements
+      const marketoFormElements = element.querySelectorAll('.marketo-form');
 
       if (marketoFormElements.length === 0) return;
 
       // Wait for MktoForms2 to be available
       const initForms = (attempts = 0) => {
         if (typeof window.MktoForms2 !== 'undefined') {
-          marketoFormElements.forEach(element => {
-            const formId = parseInt(element.dataset.formId);
-            const isLightbox = element.dataset.lightbox === 'true';
-            const containerId = element.id;
+          marketoFormElements.forEach(formContainer => {
+            const formId = parseInt(formContainer.dataset.formId);
+            const isLightbox = formContainer.dataset.lightbox === 'true';
 
-            if (!formId || element.dataset.marketoLoaded === 'true') return;
+            if (!formId || formContainer.dataset.marketoLoaded === 'true') return;
 
             // Create form container if it doesn't exist
-            if (!element.querySelector('form')) {
+            if (!formContainer.querySelector('form')) {
               const formElement = document.createElement('form');
               formElement.id = `mktoForm_${formId}`;
-              element.appendChild(formElement);
+              formContainer.appendChild(formElement);
             }
 
             // Load the form
@@ -39,7 +65,7 @@ function initializeMarketoForms(api) {
                 function(form) {
                   // Create a button to trigger the lightbox
                   const button = document.createElement('button');
-                  button.textContent = element.dataset.buttonText || 'Open Form';
+                  button.textContent = formContainer.dataset.buttonText || 'Open Form';
                   button.className = 'btn btn-primary marketo-lightbox-trigger';
                   button.onclick = function(e) {
                     e.preventDefault();
@@ -47,9 +73,9 @@ function initializeMarketoForms(api) {
                   };
 
                   // Clear the container and add the button
-                  element.innerHTML = '';
-                  element.appendChild(button);
-                  element.dataset.marketoLoaded = 'true';
+                  formContainer.innerHTML = '';
+                  formContainer.appendChild(button);
+                  formContainer.dataset.marketoLoaded = 'true';
                 }
               );
             } else {
@@ -58,7 +84,7 @@ function initializeMarketoForms(api) {
                 MARKETO_MUNCHKIN_ID,
                 formId
               );
-              element.dataset.marketoLoaded = 'true';
+              formContainer.dataset.marketoLoaded = 'true';
             }
           });
         } else if (attempts < 50) {
@@ -66,8 +92,8 @@ function initializeMarketoForms(api) {
           setTimeout(() => initForms(attempts + 1), 100);
         } else {
           console.error('Marketo Forms 2.0 library failed to load');
-          marketoFormElements.forEach(element => {
-            element.innerHTML = '<p class="error">Error: Marketo Forms library failed to load</p>';
+          marketoFormElements.forEach(formContainer => {
+            formContainer.innerHTML = '<p class="error">Error: Marketo Forms library failed to load</p>';
           });
         }
       };
@@ -76,41 +102,6 @@ function initializeMarketoForms(api) {
     },
     { id: "marketo-forms-init" }
   );
-
-  // Add BBCode-style tag support [marketo-form id=1309]
-  api.addTagDecorateCallback(($elem) => {
-    if (!$elem || !$elem[0]) return;
-
-    const text = $elem[0].textContent || '';
-
-    // Match [marketo-form id=1309] or [marketo-form id=1309 lightbox=true button="Click Here"]
-    const regex = /\[marketo-form\s+id=(\d+)(?:\s+lightbox=(true|false))?(?:\s+button="([^"]*)")?\]/g;
-
-    let match;
-    while ((match = regex.exec(text)) !== null) {
-      const formId = match[1];
-      const lightbox = match[2] === 'true';
-      const buttonText = match[3] || 'Open Form';
-
-      // Create container div
-      const container = document.createElement('div');
-      container.className = 'marketo-form';
-      container.dataset.formId = formId;
-      container.dataset.lightbox = lightbox;
-      container.dataset.buttonText = buttonText;
-      container.id = `marketo-form-container-${formId}-${Date.now()}`;
-
-      // Replace the text with the container
-      const textNode = document.createTextNode(text.substring(0, match.index));
-      const parent = $elem[0].parentNode;
-      parent.insertBefore(textNode, $elem[0]);
-      parent.insertBefore(container, $elem[0]);
-
-      // Update text for remaining matches
-      const remainingText = text.substring(match.index + match[0].length);
-      $elem[0].textContent = remainingText;
-    }
-  });
 }
 
 export default {

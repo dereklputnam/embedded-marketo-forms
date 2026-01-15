@@ -63,22 +63,25 @@
 
     .mktoLabel {
       width: auto !important;
-      padding-bottom: 5px;
-      color: var(--primary-high);
-      font-weight: 600;
-      font-size: var(--font-down-1);
+      padding-bottom: 0.5em;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.875em;
+      font-family: var(--font-family);
     }
 
     .mktoButton {
       background: var(--tertiary);
       color: var(--secondary);
       border: none;
-      padding: 0.65em 1.5em;
-      font-size: var(--font-0);
+      padding: 0.75em 2em;
+      font-size: 1em;
       font-weight: 600;
-      border-radius: 3px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: background 0.15s;
+      font-family: Arial, sans-serif;
+      margin-top: 0.5em;
 
       &:hover {
         background: var(--tertiary-hover);
@@ -130,7 +133,7 @@
   .marketo-success-message {
     font-size: 1.5em;
     font-weight: 400;
-    color: var(--success);
+    color: var(--primary);
     margin: 0 0 1.5em 0;
     line-height: 1.4;
     font-family: var(--font-family);
@@ -143,23 +146,20 @@
     font-weight: 600;
     text-decoration: none;
     border-radius: 25px;
-    transition: all 0.15s;
+    transition: background 0.15s;
     background: var(--tertiary);
     color: var(--secondary);
     border: none;
-    font-family: var(--font-family);
+    font-family: Arial, sans-serif;
     letter-spacing: 0.02em;
 
     &:hover {
       background: var(--tertiary-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       color: var(--secondary);
       text-decoration: none;
     }
 
     &:active {
-      transform: translateY(0);
       background: var(--tertiary-high);
     }
   }

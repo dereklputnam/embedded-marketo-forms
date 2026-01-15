@@ -27,20 +27,42 @@
       }
     }
 
-    // Style form text and descriptions (subtext) - remove line breaks
+    // Style form text and descriptions (subtext)
     .mktoFormCol,
-    .mktoFormRow,
-    p,
-    span,
-    div {
+    .mktoFormRow {
+      color: var(--primary) !important;
+      font-family: var(--font-family) !important;
+    }
+
+    // Style paragraph text specifically (subtext below form)
+    > p {
       color: var(--primary) !important;
       font-family: var(--font-family) !important;
       font-size: 16px !important;
+      margin-top: 0.5em !important;
     }
 
-    p, span, div {
-      display: inline !important;
-      white-space: normal !important;
+    // Style error messages
+    .mktoError {
+      background: var(--danger) !important;
+      color: #ffffff !important;
+      padding: 8px 12px !important;
+      border-radius: 4px !important;
+      font-size: 14px !important;
+      margin-top: 8px !important;
+      display: block !important;
+
+      .mktoErrorArrowWrap {
+        display: none !important;
+      }
+
+      .mktoErrorMsg {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: #ffffff !important;
+        padding: 0 !important;
+      }
     }
 
     // Center the button row

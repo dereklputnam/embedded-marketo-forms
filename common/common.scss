@@ -11,7 +11,7 @@
     color: var(--primary) !important;
     max-width: 400px !important;
 
-    // Style labels (Work Email) - position above input
+    // Style labels (Work Email) - position above input, keep asterisk inline
     .mktoLabel {
       color: var(--primary) !important;
       font-family: "Hubot Sans", Arial, sans-serif !important;
@@ -20,9 +20,14 @@
       width: 100% !important;
       float: none !important;
       text-align: left !important;
+
+      .mktoAsterix {
+        display: inline !important;
+        padding-left: 2px !important;
+      }
     }
 
-    // Style form text and descriptions (subtext)
+    // Style form text and descriptions (subtext) - remove line breaks
     .mktoFormCol,
     .mktoFormRow,
     p,
@@ -31,6 +36,16 @@
       color: var(--primary) !important;
       font-family: var(--font-family) !important;
       font-size: 16px !important;
+    }
+
+    p, span, div {
+      display: inline !important;
+      white-space: normal !important;
+    }
+
+    // Center the button row
+    .mktoButtonRow {
+      text-align: center !important;
     }
 
     // Style the submit button
@@ -47,6 +62,7 @@
       transition: background 0.15s;
       box-shadow: none !important;
       font-family: var(--font-family) !important;
+      margin: 0 auto !important;
 
       &:hover {
         background: var(--tertiary-hover) !important;

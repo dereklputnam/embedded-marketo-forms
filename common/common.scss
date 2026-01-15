@@ -16,8 +16,8 @@
       color: var(--primary) !important;
       font-family: "Hubot Sans", Arial, sans-serif !important;
       font-size: 21px !important;
-      display: block !important;
-      width: 100% !important;
+      display: inline-block !important;
+      width: auto !important;
       float: none !important;
       text-align: left !important;
 
@@ -84,6 +84,7 @@
       transition: background 0.15s;
       box-shadow: none !important;
       font-family: var(--font-family) !important;
+      display: block !important;
       margin: 0 auto !important;
 
       &:hover {

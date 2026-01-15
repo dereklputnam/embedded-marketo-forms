@@ -1,0 +1,63 @@
+// Marketo Form Container Styling
+.marketo-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 0;
+
+  // Ensure form doesn't overflow
+  form {
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  // Fix Marketo form field styling
+  .mktoForm {
+    width: 100% !important;
+    max-width: 600px !important;
+
+    .mktoFormRow {
+      width: 100% !important;
+    }
+
+    .mktoFieldWrap {
+      width: 100% !important;
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="url"],
+      select,
+      textarea {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+    }
+
+    .mktoLabel {
+      width: auto !important;
+      padding-bottom: 5px;
+    }
+
+    .mktoGutter {
+      display: none;
+    }
+  }
+}
+
+// Lightbox button styling
+.marketo-lightbox-trigger {
+  display: inline-block;
+  margin: 20px 0;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+// Ensure lightbox forms are properly sized
+#mktoForms2BaseStyle {
+  .mktoForm {
+    max-width: 600px !important;
+    width: 100% !important;
+  }
+}

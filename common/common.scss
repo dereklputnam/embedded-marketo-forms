@@ -4,8 +4,29 @@
   margin: 20px 0;
   padding: 0;
 
-  // Style the Marketo submit button
+  // Style the Marketo form
   .mktoForm {
+    // Style all form text with Syne font and primary color
+    font-family: var(--font-family) !important;
+    color: var(--primary) !important;
+
+    // Style labels
+    .mktoLabel {
+      color: var(--primary) !important;
+      font-family: var(--font-family) !important;
+    }
+
+    // Style form text and descriptions
+    .mktoFormCol,
+    .mktoFormRow,
+    p,
+    span,
+    div {
+      color: var(--primary) !important;
+      font-family: var(--font-family) !important;
+    }
+
+    // Style the submit button
     .mktoButton {
       background: var(--tertiary) !important;
       color: var(--secondary) !important;

@@ -33,18 +33,30 @@
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
-        padding: 0.5em;
+        padding: 0.65em 0.75em;
         border: 1px solid var(--primary-low-mid);
-        border-radius: 3px;
+        border-radius: 4px;
         background: var(--secondary);
         color: var(--primary);
         font-size: var(--font-0);
         font-family: var(--font-family);
 
+        // Force proper dark mode styling
+        @media (prefers-color-scheme: dark) {
+          background: var(--secondary) !important;
+          color: var(--primary) !important;
+          border-color: var(--primary-low-mid) !important;
+        }
+
         &:focus {
           border-color: var(--tertiary);
           outline: none;
           box-shadow: 0 0 0 2px rgba(var(--tertiary-rgb), 0.25);
+        }
+
+        &::placeholder {
+          color: var(--primary-medium);
+          opacity: 0.7;
         }
       }
     }
@@ -111,32 +123,32 @@
 
 // Success message and download button styling
 .marketo-form-success {
-  padding: 2em;
+  padding: 2em 0;
   text-align: center;
-  background: var(--highlight-bg);
-  border: 1px solid var(--primary-low);
-  border-radius: 6px;
   margin: 20px 0;
 
   .marketo-success-message {
-    font-size: var(--font-up-2);
-    font-weight: 700;
+    font-size: 1.5em;
+    font-weight: 400;
     color: var(--success);
     margin: 0 0 1.5em 0;
     line-height: 1.4;
+    font-family: var(--font-family);
   }
 
   .marketo-download-button {
     display: inline-block;
-    padding: 0.75em 2em;
-    font-size: var(--font-up-1);
+    padding: 0.75em 2.5em;
+    font-size: 1.125em;
     font-weight: 600;
     text-decoration: none;
-    border-radius: 6px;
+    border-radius: 25px;
     transition: all 0.15s;
     background: var(--tertiary);
     color: var(--secondary);
     border: none;
+    font-family: var(--font-family);
+    letter-spacing: 0.02em;
 
     &:hover {
       background: var(--tertiary-hover);
@@ -150,15 +162,6 @@
       transform: translateY(0);
       background: var(--tertiary-high);
     }
-  }
-}
-
-// Dark mode specific adjustments
-.discourse-no-touch .marketo-form-success {
-  // Ensure good contrast in dark mode
-  @media (prefers-color-scheme: dark) {
-    background: var(--highlight-low);
-    border-color: var(--primary-low);
   }
 }
 

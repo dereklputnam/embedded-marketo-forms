@@ -53,11 +53,19 @@ function initializeMarketoForms(api) {
     container.appendChild(successDiv);
   }
 
+  console.log('[Marketo Forms] decorateCooked registered');
+
   api.decorateCooked(
     ($elem) => {
-      if (!$elem || !$elem[0]) return;
+      console.log('[Marketo Forms] decorateCooked called', $elem);
+
+      if (!$elem || !$elem[0]) {
+        console.log('[Marketo Forms] No element found, returning');
+        return;
+      }
 
       const element = $elem[0];
+      console.log('[Marketo Forms] Processing element:', element.innerHTML);
 
       // First, parse BBCode-style tags [marketo-form id=1309]
       const regex = /\[marketo-form\s+id=(\d+)(?:\s+lightbox=(true|false))?(?:\s+button="([^"]*)")?(?:\s+pdf="([^"]*)")?\]/gi;
@@ -241,6 +249,7 @@ function initializeMarketoForms(api) {
 export default {
   name: "embedded-marketo-forms",
   initialize() {
-    withPluginApi("0.8.31", initializeMarketoForms);
+    console.log('[Marketo Forms] Initializer starting');
+    withPluginApi("0.8", initializeMarketoForms);
   }
 };

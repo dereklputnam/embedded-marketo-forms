@@ -4,19 +4,21 @@
   margin: 20px 0;
   padding: 0;
 
-  // Style the Marketo submit button
+  // Style the Marketo submit button to match Reply to Topic button
   .mktoForm {
     .mktoButton {
       background: var(--tertiary) !important;
       color: var(--secondary) !important;
-      border-radius: 25px !important;
+      border-radius: 8px !important;
       border: none !important;
       cursor: pointer;
-      padding: 0.75em 2.5em;
-      font-size: 1em;
-      font-weight: 400;
+      padding: 8px 16px !important;
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      line-height: 20px !important;
       transition: background 0.15s;
       box-shadow: none !important;
+      font-family: var(--font-family) !important;
 
       &:hover {
         background: var(--tertiary-hover) !important;

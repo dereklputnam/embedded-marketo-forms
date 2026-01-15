@@ -4,6 +4,30 @@ function initializeMarketoForms(api) {
   const MARKETO_BASE_URL = "//lp.netwrix.com";
   const MARKETO_MUNCHKIN_ID = "130-MAN-089";
 
+  // Helper function to show PDF download link after form submission
+  function showPdfDownload(container, pdfUrl) {
+    container.innerHTML = '';
+
+    const successDiv = document.createElement('div');
+    successDiv.className = 'marketo-form-success';
+
+    const successMessage = document.createElement('p');
+    successMessage.className = 'marketo-success-message';
+    successMessage.textContent = 'Thank you! Your download is ready.';
+
+    const downloadButton = document.createElement('a');
+    downloadButton.href = pdfUrl;
+    downloadButton.className = 'btn btn-primary marketo-download-button';
+    downloadButton.textContent = 'Download PDF';
+    downloadButton.target = '_blank';
+    downloadButton.rel = 'noopener noreferrer';
+    downloadButton.download = '';
+
+    successDiv.appendChild(successMessage);
+    successDiv.appendChild(downloadButton);
+    container.appendChild(successDiv);
+  }
+
   api.decorateCooked(
     ($elem) => {
       if (!$elem || !$elem[0]) return;
@@ -14,13 +38,14 @@ function initializeMarketoForms(api) {
       const paragraphs = element.querySelectorAll('p');
       paragraphs.forEach(p => {
         const text = p.textContent || '';
-        const regex = /\[marketo-form\s+id=(\d+)(?:\s+lightbox=(true|false))?(?:\s+button="([^"]*)")?\]/g;
+        const regex = /\[marketo-form\s+id=(\d+)(?:\s+lightbox=(true|false))?(?:\s+button="([^"]*)")?(?:\s+pdf="([^"]*)")?\]/g;
 
         let match = regex.exec(text);
         if (match) {
           const formId = match[1];
           const lightbox = match[2] === 'true';
           const buttonText = match[3] || 'Open Form';
+          const pdfUrl = match[4] || '';
 
           // Create container div
           const container = document.createElement('div');
@@ -28,6 +53,7 @@ function initializeMarketoForms(api) {
           container.dataset.formId = formId;
           container.dataset.lightbox = lightbox;
           container.dataset.buttonText = buttonText;
+          container.dataset.pdfUrl = pdfUrl;
           container.id = `marketo-form-container-${formId}-${Date.now()}`;
 
           // Replace the paragraph with the container
@@ -63,6 +89,21 @@ function initializeMarketoForms(api) {
                 MARKETO_MUNCHKIN_ID,
                 formId,
                 function(form) {
+                  // Add PDF download handler if PDF URL is provided
+                  const pdfUrl = formContainer.dataset.pdfUrl;
+                  if (pdfUrl) {
+                    form.onSuccess(function(values, followUpUrl) {
+                      // Hide the lightbox
+                      window.MktoForms2.lightbox(form).hide();
+
+                      // Show success message with download link
+                      showPdfDownload(formContainer, pdfUrl);
+
+                      // Prevent default redirect
+                      return false;
+                    });
+                  }
+
                   // Create a button to trigger the lightbox
                   const button = document.createElement('button');
                   button.textContent = formContainer.dataset.buttonText || 'Open Form';
@@ -82,7 +123,20 @@ function initializeMarketoForms(api) {
               window.MktoForms2.loadForm(
                 MARKETO_BASE_URL,
                 MARKETO_MUNCHKIN_ID,
-                formId
+                formId,
+                function(form) {
+                  // Add PDF download handler if PDF URL is provided
+                  const pdfUrl = formContainer.dataset.pdfUrl;
+                  if (pdfUrl) {
+                    form.onSuccess(function(values, followUpUrl) {
+                      // Show success message with download link
+                      showPdfDownload(formContainer, pdfUrl);
+
+                      // Prevent default redirect
+                      return false;
+                    });
+                  }
+                }
               );
               formContainer.dataset.marketoLoaded = 'true';
             }

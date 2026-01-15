@@ -6,6 +6,8 @@ A Discourse theme component that allows you to embed Marketo forms anywhere in y
 
 - Embed multiple Marketo forms with different IDs
 - Support for both inline embedded forms and lightbox popup forms
+- PDF gating: Exchange form submission for PDF downloads
+- Automatic Marketo tracking and cookie management
 - Simple BBCode-style syntax
 - Automatic Marketo Forms 2.0 library loading
 - Configurable Marketo instance settings
@@ -62,6 +64,25 @@ You can customize the button text:
 [marketo-form id=1309 lightbox=true button="Download Whitepaper"]
 ```
 
+### PDF Gating (Exchange Form for Download)
+
+To gate a PDF behind a form submission, add the `pdf` parameter with the URL to your PDF:
+
+```
+[marketo-form id=1309 pdf="https://example.com/whitepaper.pdf"]
+```
+
+When the user submits the form:
+1. Marketo tracks the submission and adds tracking cookies
+2. The form is replaced with a success message and download button
+3. The user can download the PDF
+
+This works with both embedded and lightbox forms:
+
+```
+[marketo-form id=1309 lightbox=true button="Get the Guide" pdf="https://example.com/guide.pdf"]
+```
+
 ## Examples
 
 ### Example 1: Simple Embedded Form
@@ -95,6 +116,22 @@ Want to learn more?
 [marketo-form id=1309 lightbox=true button="Request a Demo"]
 ```
 
+### Example 4: PDF Gating
+
+```
+Download our comprehensive security guide:
+
+[marketo-form id=1309 pdf="https://cdn.example.com/security-guide-2024.pdf"]
+```
+
+### Example 5: Lightbox with PDF Gate
+
+```
+Get instant access to our whitepaper:
+
+[marketo-form id=1310 lightbox=true button="Download Now" pdf="https://cdn.example.com/whitepaper.pdf"]
+```
+
 ## How It Works
 
 1. The component loads the Marketo Forms 2.0 library in the page header
@@ -102,6 +139,11 @@ Want to learn more?
 3. Each tag is replaced with a form container
 4. The Marketo form is initialized with the specified form ID
 5. For lightbox forms, a button is created that triggers the popup
+6. When a form with a PDF parameter is submitted:
+   - Marketo processes the submission and adds tracking cookies
+   - The `onSuccess` callback intercepts the default redirect
+   - The form is replaced with a success message and download button
+   - The user can click to download the PDF
 
 ## Troubleshooting
 

@@ -4,6 +4,31 @@ function initializeMarketoForms(api) {
   const MARKETO_BASE_URL = "//lp.netwrix.com";
   const MARKETO_MUNCHKIN_ID = "130-MAN-089";
 
+  // Helper function to resolve Discourse upload:// URLs to full public URLs
+  function resolveUploadUrl(url) {
+    if (!url) return url;
+
+    // If it's already a full URL, return as-is
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//')) {
+      return url;
+    }
+
+    // If it's a Discourse upload:// short URL, convert to full URL
+    if (url.startsWith('upload://')) {
+      const hash = url.replace('upload://', '');
+      // Discourse stores uploads in /uploads/short-url/{hash}
+      return `/uploads/short-url/${hash}`;
+    }
+
+    // If it's already a relative path, return as-is
+    if (url.startsWith('/')) {
+      return url;
+    }
+
+    // Otherwise, assume it's a relative path and prepend /
+    return `/${url}`;
+  }
+
   // Helper function to show PDF download link after form submission
   function showPdfDownload(container, pdfUrl) {
     container.innerHTML = '';
@@ -16,7 +41,7 @@ function initializeMarketoForms(api) {
     successMessage.textContent = 'Thank you! Your download is ready.';
 
     const downloadButton = document.createElement('a');
-    downloadButton.href = pdfUrl;
+    downloadButton.href = resolveUploadUrl(pdfUrl);
     downloadButton.className = 'btn btn-primary marketo-download-button';
     downloadButton.textContent = 'Download PDF';
     downloadButton.target = '_blank';

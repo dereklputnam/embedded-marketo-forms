@@ -72,7 +72,17 @@ To gate a PDF behind a form submission, add the `pdf` parameter with the URL to 
 [marketo-form id=1309 pdf="https://example.com/whitepaper.pdf"]
 ```
 
-When the user submits the form:
+**Using Discourse Uploads:**
+
+You can use Discourse's built-in file upload feature! Just upload your PDF using the editor, and use the `upload://` short URL directly:
+
+```
+[marketo-form id=1309 pdf="upload://o4hVqePV5XHzgNdLT69NCJabixa.pdf"]
+```
+
+The component will automatically convert Discourse short URLs to full public URLs.
+
+**When the user submits the form:**
 1. Marketo tracks the submission and adds tracking cookies
 2. The form is replaced with a success message and download button
 3. The user can download the PDF
@@ -80,7 +90,7 @@ When the user submits the form:
 This works with both embedded and lightbox forms:
 
 ```
-[marketo-form id=1309 lightbox=true button="Get the Guide" pdf="https://example.com/guide.pdf"]
+[marketo-form id=1309 lightbox=true button="Get the Guide" pdf="upload://abcd1234.pdf"]
 ```
 
 ## Examples
@@ -116,7 +126,7 @@ Want to learn more?
 [marketo-form id=1309 lightbox=true button="Request a Demo"]
 ```
 
-### Example 4: PDF Gating
+### Example 4: PDF Gating with External URL
 
 ```
 Download our comprehensive security guide:
@@ -124,12 +134,20 @@ Download our comprehensive security guide:
 [marketo-form id=1309 pdf="https://cdn.example.com/security-guide-2024.pdf"]
 ```
 
-### Example 5: Lightbox with PDF Gate
+### Example 5: PDF Gating with Discourse Upload
+
+```
+Download our whitepaper (hosted on Discourse):
+
+[marketo-form id=1309 pdf="upload://o4hVqePV5XHzgNdLT69NCJabixa.pdf"]
+```
+
+### Example 6: Lightbox with PDF Gate
 
 ```
 Get instant access to our whitepaper:
 
-[marketo-form id=1310 lightbox=true button="Download Now" pdf="https://cdn.example.com/whitepaper.pdf"]
+[marketo-form id=1310 lightbox=true button="Download Now" pdf="upload://abcd1234.pdf"]
 ```
 
 ## How It Works

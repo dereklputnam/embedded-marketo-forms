@@ -11,11 +11,12 @@
     color: var(--primary) !important;
     max-width: 400px !important;
 
-    // Style labels (Work Email) - position above input, keep asterisk inline
+    // Style labels (Work Email) - same as subtext but bolded
     .mktoLabel {
       color: var(--primary) !important;
-      font-family: "Hubot Sans", Arial, sans-serif !important;
-      font-size: 21px !important;
+      font-family: var(--font-family) !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
       display: inline-block !important;
       width: auto !important;
       float: none !important;
@@ -27,14 +28,15 @@
       }
     }
 
-    // Style form text and descriptions (subtext)
+    // Style form text and descriptions (subtext) - Syne 16px
     .mktoFormCol,
     .mktoFormRow {
       color: var(--primary) !important;
       font-family: var(--font-family) !important;
+      font-size: 16px !important;
     }
 
-    // Style paragraph text specifically (subtext below form)
+    // Style paragraph text specifically (subtext below form) - Syne 16px
     > p {
       color: var(--primary) !important;
       font-family: var(--font-family) !important;

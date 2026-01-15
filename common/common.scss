@@ -10,13 +10,14 @@
     font-family: var(--font-family) !important;
     color: var(--primary) !important;
 
-    // Style labels
+    // Style labels (Work Email)
     .mktoLabel {
       color: var(--primary) !important;
-      font-family: var(--font-family) !important;
+      font-family: "Hubot Sans", Arial, sans-serif !important;
+      font-size: 21px !important;
     }
 
-    // Style form text and descriptions
+    // Style form text and descriptions (subtext)
     .mktoFormCol,
     .mktoFormRow,
     p,
@@ -24,6 +25,7 @@
     div {
       color: var(--primary) !important;
       font-family: var(--font-family) !important;
+      font-size: 16px !important;
     }
 
     // Style the submit button

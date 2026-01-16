@@ -35,6 +35,7 @@
       font-family: var(--font-family) !important;
       font-size: 16px !important;
       margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
     }
 
     // Style paragraph text specifically (subtext below form) - Syne 16px
@@ -73,6 +74,9 @@
     .mktoButtonRow {
       text-align: center !important;
       margin-top: 0 !important;
+      margin-bottom: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
     }
 
     // Style the submit button
@@ -91,6 +95,7 @@
       font-family: var(--font-family) !important;
       display: block !important;
       margin: 0 auto !important;
+      margin-top: 8px !important;
 
       &:hover {
         background: var(--tertiary-hover) !important;
@@ -101,6 +106,12 @@
         background: var(--tertiary-high) !important;
         box-shadow: none !important;
       }
+    }
+
+    // Additional specific overrides to reduce spacing
+    .mktoFormRow:last-of-type {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
     }
   }
 }

@@ -180,6 +180,27 @@ function initializeMarketoForms(api) {
                 MARKETO_MUNCHKIN_ID,
                 formId,
                 function(form) {
+                  console.log('[Marketo Forms] Lightbox form loaded, applying spacing fixes');
+
+                  // Apply spacing fixes directly to the form elements
+                  setTimeout(() => {
+                    const formEl = form.getFormElem()[0];
+                    const buttonRow = formEl.querySelector('.mktoButtonRow');
+                    const lastRow = formEl.querySelector('.mktoFormRow:last-of-type');
+
+                    if (buttonRow) {
+                      console.log('[Marketo Forms] Found lightbox button row, applying styles');
+                      buttonRow.style.marginTop = '0';
+                      buttonRow.style.paddingTop = '0';
+                    }
+
+                    if (lastRow) {
+                      console.log('[Marketo Forms] Found lightbox last form row, applying styles');
+                      lastRow.style.marginBottom = '0';
+                      lastRow.style.paddingBottom = '0';
+                    }
+                  }, 100);
+
                   // Add PDF download handler if PDF URL is provided
                   const pdfUrl = formContainer.dataset.pdfUrl;
                   if (pdfUrl) {
@@ -216,6 +237,27 @@ function initializeMarketoForms(api) {
                 MARKETO_MUNCHKIN_ID,
                 formId,
                 function(form) {
+                  console.log('[Marketo Forms] Form loaded, applying spacing fixes');
+
+                  // Apply spacing fixes directly to the form elements
+                  setTimeout(() => {
+                    const formEl = form.getFormElem()[0];
+                    const buttonRow = formEl.querySelector('.mktoButtonRow');
+                    const lastRow = formEl.querySelector('.mktoFormRow:last-of-type');
+
+                    if (buttonRow) {
+                      console.log('[Marketo Forms] Found button row, applying styles');
+                      buttonRow.style.marginTop = '0';
+                      buttonRow.style.paddingTop = '0';
+                    }
+
+                    if (lastRow) {
+                      console.log('[Marketo Forms] Found last form row, applying styles');
+                      lastRow.style.marginBottom = '0';
+                      lastRow.style.paddingBottom = '0';
+                    }
+                  }, 100);
+
                   // Add PDF download handler if PDF URL is provided
                   const pdfUrl = formContainer.dataset.pdfUrl;
                   if (pdfUrl) {

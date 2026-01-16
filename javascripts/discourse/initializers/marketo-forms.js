@@ -182,32 +182,23 @@ function initializeMarketoForms(api) {
                 function(form) {
                   console.log('[Marketo Forms] Lightbox form loaded, applying spacing fixes');
 
-                  // Apply spacing fixes directly to the form elements
+                  // Apply text fixes to remove line breaks in subtext
                   setTimeout(() => {
                     const formEl = form.getFormElem()[0];
 
-                    // Log all form rows to debug
-                    const allRows = formEl.querySelectorAll('.mktoFormRow');
-                    console.log('[Marketo Forms] Found', allRows.length, 'lightbox form rows');
-                    allRows.forEach((row, index) => {
-                      console.log(`[Marketo Forms] Lightbox Row ${index}:`, row.className, 'margin:', window.getComputedStyle(row).marginBottom, 'padding:', window.getComputedStyle(row).paddingBottom);
-                      // Force zero spacing on all rows
-                      row.style.marginTop = '0';
-                      row.style.marginBottom = '0';
-                      row.style.paddingTop = '0';
-                      row.style.paddingBottom = '0';
-                    });
+                    // Find all paragraph elements in the form and remove <br> tags
+                    const paragraphs = formEl.querySelectorAll('p');
+                    paragraphs.forEach(p => {
+                      // Remove all <br> tags from the paragraph
+                      const brs = p.querySelectorAll('br');
+                      brs.forEach(br => br.remove());
 
-                    const buttonRow = formEl.querySelector('.mktoButtonRow');
-                    if (buttonRow) {
-                      const computedStyle = window.getComputedStyle(buttonRow);
-                      console.log('[Marketo Forms] Lightbox button row margin-top:', computedStyle.marginTop, 'padding-top:', computedStyle.paddingTop);
-                      buttonRow.style.setProperty('margin-top', '0', 'important');
-                      buttonRow.style.setProperty('padding-top', '0', 'important');
-                      buttonRow.style.setProperty('margin-bottom', '0', 'important');
-                      buttonRow.style.setProperty('padding-bottom', '0', 'important');
-                      console.log('[Marketo Forms] Lightbox button row styles applied');
-                    }
+                      // Also replace text content that might have newlines
+                      if (p.textContent.includes('\n')) {
+                        p.textContent = p.textContent.replace(/\n/g, ' ');
+                      }
+                      console.log('[Marketo Forms] Lightbox processed paragraph:', p.textContent);
+                    });
                   }, 100);
 
                   // Add PDF download handler if PDF URL is provided
@@ -248,32 +239,23 @@ function initializeMarketoForms(api) {
                 function(form) {
                   console.log('[Marketo Forms] Form loaded, applying spacing fixes');
 
-                  // Apply spacing fixes directly to the form elements
+                  // Apply text fixes to remove line breaks in subtext
                   setTimeout(() => {
                     const formEl = form.getFormElem()[0];
 
-                    // Log all form rows to debug
-                    const allRows = formEl.querySelectorAll('.mktoFormRow');
-                    console.log('[Marketo Forms] Found', allRows.length, 'form rows');
-                    allRows.forEach((row, index) => {
-                      console.log(`[Marketo Forms] Row ${index}:`, row.className, 'margin:', window.getComputedStyle(row).marginBottom, 'padding:', window.getComputedStyle(row).paddingBottom);
-                      // Force zero spacing on all rows
-                      row.style.marginTop = '0';
-                      row.style.marginBottom = '0';
-                      row.style.paddingTop = '0';
-                      row.style.paddingBottom = '0';
-                    });
+                    // Find all paragraph elements in the form and remove <br> tags
+                    const paragraphs = formEl.querySelectorAll('p');
+                    paragraphs.forEach(p => {
+                      // Remove all <br> tags from the paragraph
+                      const brs = p.querySelectorAll('br');
+                      brs.forEach(br => br.remove());
 
-                    const buttonRow = formEl.querySelector('.mktoButtonRow');
-                    if (buttonRow) {
-                      const computedStyle = window.getComputedStyle(buttonRow);
-                      console.log('[Marketo Forms] Button row margin-top:', computedStyle.marginTop, 'padding-top:', computedStyle.paddingTop);
-                      buttonRow.style.setProperty('margin-top', '0', 'important');
-                      buttonRow.style.setProperty('padding-top', '0', 'important');
-                      buttonRow.style.setProperty('margin-bottom', '0', 'important');
-                      buttonRow.style.setProperty('padding-bottom', '0', 'important');
-                      console.log('[Marketo Forms] Button row styles applied');
-                    }
+                      // Also replace text content that might have newlines
+                      if (p.textContent.includes('\n')) {
+                        p.textContent = p.textContent.replace(/\n/g, ' ');
+                      }
+                      console.log('[Marketo Forms] Processed paragraph:', p.textContent);
+                    });
                   }, 100);
 
                   // Add PDF download handler if PDF URL is provided

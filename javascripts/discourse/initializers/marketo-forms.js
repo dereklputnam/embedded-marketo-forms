@@ -185,19 +185,28 @@ function initializeMarketoForms(api) {
                   // Apply spacing fixes directly to the form elements
                   setTimeout(() => {
                     const formEl = form.getFormElem()[0];
+
+                    // Log all form rows to debug
+                    const allRows = formEl.querySelectorAll('.mktoFormRow');
+                    console.log('[Marketo Forms] Found', allRows.length, 'lightbox form rows');
+                    allRows.forEach((row, index) => {
+                      console.log(`[Marketo Forms] Lightbox Row ${index}:`, row.className, 'margin:', window.getComputedStyle(row).marginBottom, 'padding:', window.getComputedStyle(row).paddingBottom);
+                      // Force zero spacing on all rows
+                      row.style.marginTop = '0';
+                      row.style.marginBottom = '0';
+                      row.style.paddingTop = '0';
+                      row.style.paddingBottom = '0';
+                    });
+
                     const buttonRow = formEl.querySelector('.mktoButtonRow');
-                    const lastRow = formEl.querySelector('.mktoFormRow:last-of-type');
-
                     if (buttonRow) {
-                      console.log('[Marketo Forms] Found lightbox button row, applying styles');
-                      buttonRow.style.marginTop = '0';
-                      buttonRow.style.paddingTop = '0';
-                    }
-
-                    if (lastRow) {
-                      console.log('[Marketo Forms] Found lightbox last form row, applying styles');
-                      lastRow.style.marginBottom = '0';
-                      lastRow.style.paddingBottom = '0';
+                      const computedStyle = window.getComputedStyle(buttonRow);
+                      console.log('[Marketo Forms] Lightbox button row margin-top:', computedStyle.marginTop, 'padding-top:', computedStyle.paddingTop);
+                      buttonRow.style.setProperty('margin-top', '0', 'important');
+                      buttonRow.style.setProperty('padding-top', '0', 'important');
+                      buttonRow.style.setProperty('margin-bottom', '0', 'important');
+                      buttonRow.style.setProperty('padding-bottom', '0', 'important');
+                      console.log('[Marketo Forms] Lightbox button row styles applied');
                     }
                   }, 100);
 
@@ -242,19 +251,28 @@ function initializeMarketoForms(api) {
                   // Apply spacing fixes directly to the form elements
                   setTimeout(() => {
                     const formEl = form.getFormElem()[0];
+
+                    // Log all form rows to debug
+                    const allRows = formEl.querySelectorAll('.mktoFormRow');
+                    console.log('[Marketo Forms] Found', allRows.length, 'form rows');
+                    allRows.forEach((row, index) => {
+                      console.log(`[Marketo Forms] Row ${index}:`, row.className, 'margin:', window.getComputedStyle(row).marginBottom, 'padding:', window.getComputedStyle(row).paddingBottom);
+                      // Force zero spacing on all rows
+                      row.style.marginTop = '0';
+                      row.style.marginBottom = '0';
+                      row.style.paddingTop = '0';
+                      row.style.paddingBottom = '0';
+                    });
+
                     const buttonRow = formEl.querySelector('.mktoButtonRow');
-                    const lastRow = formEl.querySelector('.mktoFormRow:last-of-type');
-
                     if (buttonRow) {
-                      console.log('[Marketo Forms] Found button row, applying styles');
-                      buttonRow.style.marginTop = '0';
-                      buttonRow.style.paddingTop = '0';
-                    }
-
-                    if (lastRow) {
-                      console.log('[Marketo Forms] Found last form row, applying styles');
-                      lastRow.style.marginBottom = '0';
-                      lastRow.style.paddingBottom = '0';
+                      const computedStyle = window.getComputedStyle(buttonRow);
+                      console.log('[Marketo Forms] Button row margin-top:', computedStyle.marginTop, 'padding-top:', computedStyle.paddingTop);
+                      buttonRow.style.setProperty('margin-top', '0', 'important');
+                      buttonRow.style.setProperty('padding-top', '0', 'important');
+                      buttonRow.style.setProperty('margin-bottom', '0', 'important');
+                      buttonRow.style.setProperty('padding-bottom', '0', 'important');
+                      console.log('[Marketo Forms] Button row styles applied');
                     }
                   }, 100);
 

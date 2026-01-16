@@ -150,8 +150,9 @@
       margin-left: 0 !important;
     }
 
-    // Remove the 10px offset that's causing left indent
-    .mktoOffset {
+    // Remove the 10px offset and gutter that's causing left indent and spacing
+    .mktoOffset,
+    .mktoGutter {
       width: 0 !important;
       display: none !important;
     }

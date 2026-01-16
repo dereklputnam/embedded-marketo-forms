@@ -297,6 +297,10 @@ function initializeMarketoForms(api) {
                       newP.id = 'privacy';
                       newP.style.cssText = p.style.cssText;
                       newP.style.display = '';
+                      // Force single line display
+                      newP.style.whiteSpace = 'nowrap';
+                      newP.style.width = 'auto';
+                      newP.style.minWidth = '100%';
 
                       // Add text before the link
                       const linkMatch = textContent.match(/^(.+?)(Privacy Policy\.?)$/);

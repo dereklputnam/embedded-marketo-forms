@@ -186,31 +186,11 @@ function initializeMarketoForms(api) {
                   setTimeout(() => {
                     const formEl = form.getFormElem()[0];
 
-                    // Find all paragraph elements in the form and remove <br> tags
+                    // Find all paragraph elements in the form
                     const paragraphs = formEl.querySelectorAll('p');
                     paragraphs.forEach(p => {
-                      // Remove all <br> tags from the paragraph
-                      const brs = p.querySelectorAll('br');
-                      brs.forEach(br => br.remove());
-
-                      // Also replace text content that might have newlines
-                      if (p.textContent.includes('\n')) {
-                        p.textContent = p.textContent.replace(/\n/g, ' ');
-                      }
-
-                      // Force width properties to prevent wrapping
-                      p.style.setProperty('white-space', 'nowrap', 'important');
-                      p.style.setProperty('width', 'max-content', 'important');
-                      p.style.setProperty('max-width', 'none', 'important');
-                      p.style.setProperty('overflow', 'visible', 'important');
-
-                      // Force overflow visible on all parent containers
-                      let parent = p.parentElement;
-                      while (parent && parent !== formEl) {
-                        parent.style.setProperty('overflow', 'visible', 'important');
-                        parent = parent.parentElement;
-                      }
-                      formEl.style.setProperty('overflow', 'visible', 'important');
+                      // Get the HTML content and remove all <br> tags
+                      p.innerHTML = p.innerHTML.replace(/<br\s*\/?>/gi, ' ');
 
                       console.log('[Marketo Forms] Lightbox processed paragraph:', p.textContent);
                     });
@@ -258,31 +238,11 @@ function initializeMarketoForms(api) {
                   setTimeout(() => {
                     const formEl = form.getFormElem()[0];
 
-                    // Find all paragraph elements in the form and remove <br> tags
+                    // Find all paragraph elements in the form
                     const paragraphs = formEl.querySelectorAll('p');
                     paragraphs.forEach(p => {
-                      // Remove all <br> tags from the paragraph
-                      const brs = p.querySelectorAll('br');
-                      brs.forEach(br => br.remove());
-
-                      // Also replace text content that might have newlines
-                      if (p.textContent.includes('\n')) {
-                        p.textContent = p.textContent.replace(/\n/g, ' ');
-                      }
-
-                      // Force width properties to prevent wrapping
-                      p.style.setProperty('white-space', 'nowrap', 'important');
-                      p.style.setProperty('width', 'max-content', 'important');
-                      p.style.setProperty('max-width', 'none', 'important');
-                      p.style.setProperty('overflow', 'visible', 'important');
-
-                      // Force overflow visible on all parent containers
-                      let parent = p.parentElement;
-                      while (parent && parent !== formEl) {
-                        parent.style.setProperty('overflow', 'visible', 'important');
-                        parent = parent.parentElement;
-                      }
-                      formEl.style.setProperty('overflow', 'visible', 'important');
+                      // Get the HTML content and remove all <br> tags
+                      p.innerHTML = p.innerHTML.replace(/<br\s*\/?>/gi, ' ');
 
                       console.log('[Marketo Forms] Processed paragraph:', p.textContent);
                     });

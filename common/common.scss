@@ -47,6 +47,8 @@
       margin-bottom: 0 !important;
       padding-bottom: 0 !important;
       overflow: visible !important;
+      margin-left: 0 !important;
+      padding-left: 0 !important;
     }
 
     // Style paragraph text specifically (subtext below form) - Syne 16px
@@ -125,6 +127,16 @@
     .mktoFormRow:last-of-type {
       margin-bottom: 0 !important;
       padding-bottom: 0 !important;
+    }
+
+    // Hide original privacy div immediately to prevent flash of line-broken text
+    // JavaScript will create a clean version and make it visible
+    .mktoHtmlText #privacy {
+      visibility: hidden !important;
+
+      &[style*="display: block"] {
+        visibility: visible !important;
+      }
     }
   }
 }

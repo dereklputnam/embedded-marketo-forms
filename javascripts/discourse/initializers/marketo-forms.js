@@ -296,8 +296,9 @@ function initializeMarketoForms(api) {
                       const newP = document.createElement('div');
                       newP.id = 'privacy';
                       newP.style.cssText = p.style.cssText;
-                      // Force single line display
+                      // Force single line display and ensure visibility
                       newP.style.display = 'block';
+                      newP.style.visibility = 'visible';
                       newP.style.whiteSpace = 'nowrap';
                       newP.style.width = 'auto';
                       newP.style.minWidth = '100%';

@@ -266,16 +266,26 @@ function initializeMarketoForms(api) {
                   // Apply text fixes to remove line breaks in subtext
                   setTimeout(() => {
                     const formEl = form.getFormElem()[0];
+                    console.log('[Marketo Forms] DEBUG: Form element:', formEl);
 
                     // Find all paragraph elements in the form
                     const paragraphs = formEl.querySelectorAll('p');
-                    paragraphs.forEach(p => {
+                    console.log('[Marketo Forms] DEBUG: Found paragraphs:', paragraphs.length);
+
+                    paragraphs.forEach((p, index) => {
+                      console.log('[Marketo Forms] DEBUG: Processing paragraph', index);
+                      console.log('[Marketo Forms] DEBUG: Original HTML:', p.innerHTML);
+                      console.log('[Marketo Forms] DEBUG: Original text:', p.textContent);
+
                       // Extract text and links
                       const links = Array.from(p.querySelectorAll('a'));
                       const textContent = p.textContent.trim();
+                      console.log('[Marketo Forms] DEBUG: Found links:', links.length);
+                      console.log('[Marketo Forms] DEBUG: Text content:', textContent);
 
                       // Hide the original paragraph
                       p.style.display = 'none';
+                      console.log('[Marketo Forms] DEBUG: Hidden original paragraph');
 
                       // Create a new clean paragraph
                       const newP = document.createElement('p');
@@ -284,6 +294,8 @@ function initializeMarketoForms(api) {
 
                       // Add text before the link
                       const linkMatch = textContent.match(/^(.+?)(Privacy Policy\.?)$/);
+                      console.log('[Marketo Forms] DEBUG: Link match:', linkMatch);
+
                       if (linkMatch && links.length > 0) {
                         // Add the text before the link
                         newP.appendChild(document.createTextNode(linkMatch[1]));
@@ -294,14 +306,17 @@ function initializeMarketoForms(api) {
                         if (!linkMatch[2].endsWith('.')) {
                           newP.appendChild(document.createTextNode('.'));
                         }
+                        console.log('[Marketo Forms] DEBUG: Created paragraph with link');
                       } else {
                         // No link found, just add the text
                         newP.textContent = textContent;
+                        console.log('[Marketo Forms] DEBUG: Created paragraph without link');
                       }
 
                       // Insert the new paragraph after the original
                       p.parentNode.insertBefore(newP, p.nextSibling);
-
+                      console.log('[Marketo Forms] DEBUG: Inserted new paragraph');
+                      console.log('[Marketo Forms] DEBUG: New paragraph HTML:', newP.innerHTML);
                       console.log('[Marketo Forms] Recreated paragraph:', newP.textContent);
                     });
                   }, 100);

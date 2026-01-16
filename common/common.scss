@@ -30,6 +30,12 @@
       }
     }
 
+    // Make the input field narrower so text below doesn't need to wrap
+    .mktoField {
+      max-width: 300px !important;
+      width: 100% !important;
+    }
+
     // Style form text and descriptions (subtext) - Syne 16px
     .mktoFormCol,
     .mktoFormRow {

@@ -138,6 +138,17 @@
         visibility: visible !important;
       }
     }
+
+    // Allow the privacy text container to expand beyond its default width
+    .mktoHtmlText {
+      width: auto !important;
+      max-width: 100% !important;
+    }
+
+    // Remove the left margin from button wrapper
+    .mktoButtonWrap {
+      margin-left: 0 !important;
+    }
   }
 }
 

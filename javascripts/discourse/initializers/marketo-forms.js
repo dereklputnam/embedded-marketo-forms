@@ -288,10 +288,6 @@ function initializeMarketoForms(api) {
                       console.log('[Marketo Forms] DEBUG: Found links:', links.length);
                       console.log('[Marketo Forms] DEBUG: Text content:', textContent);
 
-                      // Hide the original div
-                      p.style.display = 'none';
-                      console.log('[Marketo Forms] DEBUG: Hidden original div');
-
                       // Create a new clean div
                       const newP = document.createElement('div');
                       newP.id = 'privacy';
@@ -324,9 +320,9 @@ function initializeMarketoForms(api) {
                         console.log('[Marketo Forms] DEBUG: Created paragraph without link');
                       }
 
-                      // Insert the new div after the original
-                      p.parentNode.insertBefore(newP, p.nextSibling);
-                      console.log('[Marketo Forms] DEBUG: Inserted new div');
+                      // Replace the original div with the new one
+                      p.parentNode.replaceChild(newP, p);
+                      console.log('[Marketo Forms] DEBUG: Replaced original div');
                       console.log('[Marketo Forms] DEBUG: New div HTML:', newP.innerHTML);
                       console.log('[Marketo Forms] Recreated privacy div:', newP.textContent);
                     });

@@ -1,7 +1,7 @@
 marketo_base_url:
-  default: "//lp.netwrix.com"
-  description: "The base URL for your Marketo instance (e.g., //lp.netwrix.com)"
+  default: ""
+  description: "The base URL for your Marketo instance (e.g., //lp.example.com)"
 
 marketo_munchkin_id:
-  default: "130-MAN-089"
+  default: ""
   description: "Your Marketo Munchkin ID"

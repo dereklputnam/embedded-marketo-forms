@@ -1,8 +1,9 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 
 function initializeMarketoForms(api) {
-  const MARKETO_BASE_URL = "//lp.netwrix.com";
-  const MARKETO_MUNCHKIN_ID = "130-MAN-089";
+  const siteSettings = api.container.lookup("site-settings:main");
+  const MARKETO_BASE_URL = siteSettings.marketo_base_url;
+  const MARKETO_MUNCHKIN_ID = siteSettings.marketo_munchkin_id;
 
   // Helper function to resolve Discourse upload:// URLs to full public URLs
   function resolveUploadUrl(url) {

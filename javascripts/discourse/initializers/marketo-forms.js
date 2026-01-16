@@ -189,8 +189,14 @@ function initializeMarketoForms(api) {
                     // Find all paragraph elements in the form
                     const paragraphs = formEl.querySelectorAll('p');
                     paragraphs.forEach(p => {
-                      // Get the HTML content and remove all <br> tags
-                      p.innerHTML = p.innerHTML.replace(/<br\s*\/?>/gi, ' ');
+                      // Save the original HTML for links
+                      const originalHTML = p.innerHTML;
+
+                      // Remove all <br> tags and extra whitespace
+                      let cleanedHTML = originalHTML.replace(/<br\s*\/?>/gi, ' ');
+                      cleanedHTML = cleanedHTML.replace(/\s+/g, ' ').trim();
+
+                      p.innerHTML = cleanedHTML;
 
                       console.log('[Marketo Forms] Lightbox processed paragraph:', p.textContent);
                     });
@@ -241,8 +247,14 @@ function initializeMarketoForms(api) {
                     // Find all paragraph elements in the form
                     const paragraphs = formEl.querySelectorAll('p');
                     paragraphs.forEach(p => {
-                      // Get the HTML content and remove all <br> tags
-                      p.innerHTML = p.innerHTML.replace(/<br\s*\/?>/gi, ' ');
+                      // Save the original HTML for links
+                      const originalHTML = p.innerHTML;
+
+                      // Remove all <br> tags and extra whitespace
+                      let cleanedHTML = originalHTML.replace(/<br\s*\/?>/gi, ' ');
+                      cleanedHTML = cleanedHTML.replace(/\s+/g, ' ').trim();
+
+                      p.innerHTML = cleanedHTML;
 
                       console.log('[Marketo Forms] Processed paragraph:', p.textContent);
                     });

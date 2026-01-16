@@ -145,8 +145,19 @@
       max-width: 100% !important;
     }
 
-    // Remove the left margin from button wrapper
+    // Remove the left margin from button wrapper and offsets
     .mktoButtonWrap {
+      margin-left: 0 !important;
+    }
+
+    // Remove the 10px offset that's causing left indent
+    .mktoOffset {
+      width: 0 !important;
+      display: none !important;
+    }
+
+    // Override inline margin-left style on button wrapper
+    .mktoButtonRow .mktoButtonWrap[style*="margin-left"] {
       margin-left: 0 !important;
     }
   }

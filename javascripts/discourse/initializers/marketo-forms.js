@@ -189,16 +189,39 @@ function initializeMarketoForms(api) {
                     // Find all paragraph elements in the form
                     const paragraphs = formEl.querySelectorAll('p');
                     paragraphs.forEach(p => {
-                      // Save the original HTML for links
-                      const originalHTML = p.innerHTML;
+                      // Extract text and links
+                      const links = Array.from(p.querySelectorAll('a'));
+                      const textContent = p.textContent.trim();
 
-                      // Remove all <br> tags and extra whitespace
-                      let cleanedHTML = originalHTML.replace(/<br\s*\/?>/gi, ' ');
-                      cleanedHTML = cleanedHTML.replace(/\s+/g, ' ').trim();
+                      // Hide the original paragraph
+                      p.style.display = 'none';
 
-                      p.innerHTML = cleanedHTML;
+                      // Create a new clean paragraph
+                      const newP = document.createElement('p');
+                      newP.style.cssText = p.style.cssText;
+                      newP.style.display = '';
 
-                      console.log('[Marketo Forms] Lightbox processed paragraph:', p.textContent);
+                      // Add text before the link
+                      const linkMatch = textContent.match(/^(.+?)(Privacy Policy\.?)$/);
+                      if (linkMatch && links.length > 0) {
+                        // Add the text before the link
+                        newP.appendChild(document.createTextNode(linkMatch[1]));
+                        // Clone and add the link
+                        const linkClone = links[0].cloneNode(true);
+                        newP.appendChild(linkClone);
+                        // Add period if it's not there
+                        if (!linkMatch[2].endsWith('.')) {
+                          newP.appendChild(document.createTextNode('.'));
+                        }
+                      } else {
+                        // No link found, just add the text
+                        newP.textContent = textContent;
+                      }
+
+                      // Insert the new paragraph after the original
+                      p.parentNode.insertBefore(newP, p.nextSibling);
+
+                      console.log('[Marketo Forms] Lightbox recreated paragraph:', newP.textContent);
                     });
                   }, 100);
 
@@ -247,16 +270,39 @@ function initializeMarketoForms(api) {
                     // Find all paragraph elements in the form
                     const paragraphs = formEl.querySelectorAll('p');
                     paragraphs.forEach(p => {
-                      // Save the original HTML for links
-                      const originalHTML = p.innerHTML;
+                      // Extract text and links
+                      const links = Array.from(p.querySelectorAll('a'));
+                      const textContent = p.textContent.trim();
 
-                      // Remove all <br> tags and extra whitespace
-                      let cleanedHTML = originalHTML.replace(/<br\s*\/?>/gi, ' ');
-                      cleanedHTML = cleanedHTML.replace(/\s+/g, ' ').trim();
+                      // Hide the original paragraph
+                      p.style.display = 'none';
 
-                      p.innerHTML = cleanedHTML;
+                      // Create a new clean paragraph
+                      const newP = document.createElement('p');
+                      newP.style.cssText = p.style.cssText;
+                      newP.style.display = '';
 
-                      console.log('[Marketo Forms] Processed paragraph:', p.textContent);
+                      // Add text before the link
+                      const linkMatch = textContent.match(/^(.+?)(Privacy Policy\.?)$/);
+                      if (linkMatch && links.length > 0) {
+                        // Add the text before the link
+                        newP.appendChild(document.createTextNode(linkMatch[1]));
+                        // Clone and add the link
+                        const linkClone = links[0].cloneNode(true);
+                        newP.appendChild(linkClone);
+                        // Add period if it's not there
+                        if (!linkMatch[2].endsWith('.')) {
+                          newP.appendChild(document.createTextNode('.'));
+                        }
+                      } else {
+                        // No link found, just add the text
+                        newP.textContent = textContent;
+                      }
+
+                      // Insert the new paragraph after the original
+                      p.parentNode.insertBefore(newP, p.nextSibling);
+
+                      console.log('[Marketo Forms] Recreated paragraph:', newP.textContent);
                     });
                   }, 100);
 

@@ -267,10 +267,15 @@ function initializeMarketoForms(api) {
                   setTimeout(() => {
                     const formEl = form.getFormElem()[0];
                     console.log('[Marketo Forms] DEBUG: Form element:', formEl);
+                    console.log('[Marketo Forms] DEBUG: Form HTML:', formEl.innerHTML);
 
-                    // Find all paragraph elements in the form
+                    // Find all paragraph elements in the form and its parent
                     const paragraphs = formEl.querySelectorAll('p');
-                    console.log('[Marketo Forms] DEBUG: Found paragraphs:', paragraphs.length);
+                    console.log('[Marketo Forms] DEBUG: Found paragraphs in form:', paragraphs.length);
+
+                    // Also search in the parent container
+                    const parentParagraphs = formEl.parentElement.querySelectorAll('p');
+                    console.log('[Marketo Forms] DEBUG: Found paragraphs in parent:', parentParagraphs.length);
 
                     paragraphs.forEach((p, index) => {
                       console.log('[Marketo Forms] DEBUG: Processing paragraph', index);
@@ -319,7 +324,7 @@ function initializeMarketoForms(api) {
                       console.log('[Marketo Forms] DEBUG: New paragraph HTML:', newP.innerHTML);
                       console.log('[Marketo Forms] Recreated paragraph:', newP.textContent);
                     });
-                  }, 100);
+                  }, 500);
 
                   // Add PDF download handler if PDF URL is provided
                   const pdfUrl = formContainer.dataset.pdfUrl;

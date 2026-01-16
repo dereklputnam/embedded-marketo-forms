@@ -23,6 +23,8 @@
       width: auto !important;
       float: none !important;
       text-align: left !important;
+      margin-left: 0 !important;
+      padding-left: 0 !important;
 
       .mktoAsterix {
         display: inline !important;
@@ -80,13 +82,15 @@
       }
     }
 
-    // Center the button row
+    // Left-align the button row
     .mktoButtonRow {
-      text-align: center !important;
+      text-align: left !important;
       margin-top: 0 !important;
       margin-bottom: 0 !important;
       padding-top: 0 !important;
       padding-bottom: 0 !important;
+      margin-left: 0 !important;
+      padding-left: 0 !important;
     }
 
     // Style the submit button
@@ -103,8 +107,8 @@
       transition: background 0.15s;
       box-shadow: none !important;
       font-family: var(--font-family) !important;
-      display: block !important;
-      margin: 0 auto !important;
+      display: inline-block !important;
+      margin: 0 !important;
 
       &:hover {
         background: var(--tertiary-hover) !important;

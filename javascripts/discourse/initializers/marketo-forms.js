@@ -53,19 +53,13 @@ function initializeMarketoForms(api) {
     container.appendChild(successDiv);
   }
 
-  console.log('[Marketo Forms] decorateCooked registered');
-
   api.decorateCooked(
     ($elem) => {
-      console.log('[Marketo Forms] decorateCooked called', $elem);
-
       if (!$elem || !$elem[0]) {
-        console.log('[Marketo Forms] No element found, returning');
         return;
       }
 
       const element = $elem[0];
-      console.log('[Marketo Forms] Processing element:', element.innerHTML);
 
       // First, parse BBCode-style tags [marketo-form id=1309]
       // Support both regular quotes and HTML-encoded quotes, and optional quotes around values
@@ -88,8 +82,6 @@ function initializeMarketoForms(api) {
         regex.lastIndex = 0; // Reset regex
       }
 
-      console.log('[Marketo Forms] Found text nodes to process:', textNodesToProcess.length);
-
       textNodesToProcess.forEach(textNode => {
         const text = textNode.textContent;
         regex.lastIndex = 0; // Reset regex
@@ -99,8 +91,6 @@ function initializeMarketoForms(api) {
         let lastIndex = 0;
 
         while ((match = regex.exec(text)) !== null) {
-          console.log('[Marketo Forms] Found match:', match);
-
           const formId = match[1];
           const lightbox = match[2] === 'true';
           // Button text can be in match[3] (double quotes), match[4] (single quotes), or match[5] (no quotes)
@@ -121,8 +111,6 @@ function initializeMarketoForms(api) {
           container.dataset.buttonText = buttonText;
           container.dataset.pdfUrl = pdfUrl;
           container.id = `marketo-form-container-${formId}-${Date.now()}`;
-
-          console.log('[Marketo Forms] Created container for form:', formId, 'with PDF:', pdfUrl);
 
           fragments.push(container);
           lastIndex = regex.lastIndex;
@@ -146,23 +134,17 @@ function initializeMarketoForms(api) {
       // Now find and initialize all marketo-form elements
       const marketoFormElements = element.querySelectorAll('.marketo-form');
 
-      console.log('[Marketo Forms] Found form elements:', marketoFormElements.length);
-
       if (marketoFormElements.length === 0) return;
 
       // Wait for MktoForms2 to be available
       const initForms = (attempts = 0) => {
         if (typeof window.MktoForms2 !== 'undefined') {
-          console.log('[Marketo Forms] MktoForms2 library loaded, initializing forms');
           marketoFormElements.forEach(formContainer => {
             const formId = parseInt(formContainer.dataset.formId);
             const isLightbox = formContainer.dataset.lightbox === 'true';
             const pdfUrl = formContainer.dataset.pdfUrl;
 
-            console.log('[Marketo Forms] Processing form:', formId, 'lightbox:', isLightbox, 'pdf:', pdfUrl);
-
             if (!formId || formContainer.dataset.marketoLoaded === 'true') {
-              console.log('[Marketo Forms] Skipping form (no ID or already loaded)');
               return;
             }
 
@@ -180,8 +162,6 @@ function initializeMarketoForms(api) {
                 MARKETO_MUNCHKIN_ID,
                 formId,
                 function(form) {
-                  console.log('[Marketo Forms] Lightbox form loaded, applying spacing fixes');
-
                   // Apply text fixes to remove line breaks in subtext
                   setTimeout(() => {
                     const formEl = form.getFormElem()[0];
@@ -220,8 +200,6 @@ function initializeMarketoForms(api) {
 
                       // Insert the new paragraph after the original
                       p.parentNode.insertBefore(newP, p.nextSibling);
-
-                      console.log('[Marketo Forms] Lightbox recreated paragraph:', newP.textContent);
                     });
                   }, 100);
 
@@ -261,32 +239,22 @@ function initializeMarketoForms(api) {
                 MARKETO_MUNCHKIN_ID,
                 formId,
                 function(form) {
-                  console.log('[Marketo Forms] Form loaded, applying spacing fixes');
-
                   // Apply text fixes to remove line breaks in subtext
                   setTimeout(() => {
                     const formEl = form.getFormElem()[0];
 
                     // Find the privacy div specifically (not a paragraph!)
                     const privacyDiv = formEl.querySelector('#privacy');
-                    console.log('[Marketo Forms] DEBUG: Found privacy div:', privacyDiv);
 
                     if (!privacyDiv) {
-                      console.log('[Marketo Forms] DEBUG: Privacy div not found, skipping');
                       return;
                     }
 
                     const elements = [privacyDiv];
-                    elements.forEach((p, index) => {
-                      console.log('[Marketo Forms] DEBUG: Processing paragraph', index);
-                      console.log('[Marketo Forms] DEBUG: Original HTML:', p.innerHTML);
-                      console.log('[Marketo Forms] DEBUG: Original text:', p.textContent);
-
+                    elements.forEach((p) => {
                       // Extract text and links
                       const links = Array.from(p.querySelectorAll('a'));
                       const textContent = p.textContent.trim();
-                      console.log('[Marketo Forms] DEBUG: Found links:', links.length);
-                      console.log('[Marketo Forms] DEBUG: Text content:', textContent);
 
                       // Create a new clean div
                       const newP = document.createElement('div');
@@ -301,7 +269,6 @@ function initializeMarketoForms(api) {
 
                       // Add text before the link
                       const linkMatch = textContent.match(/^(.+?)(Privacy Policy\.?)$/);
-                      console.log('[Marketo Forms] DEBUG: Link match:', linkMatch);
 
                       if (linkMatch && links.length > 0) {
                         // Add the text before the link
@@ -313,18 +280,13 @@ function initializeMarketoForms(api) {
                         if (!linkMatch[2].endsWith('.')) {
                           newP.appendChild(document.createTextNode('.'));
                         }
-                        console.log('[Marketo Forms] DEBUG: Created paragraph with link');
                       } else {
                         // No link found, just add the text
                         newP.textContent = textContent;
-                        console.log('[Marketo Forms] DEBUG: Created paragraph without link');
                       }
 
                       // Replace the original div with the new one
                       p.parentNode.replaceChild(newP, p);
-                      console.log('[Marketo Forms] DEBUG: Replaced original div');
-                      console.log('[Marketo Forms] DEBUG: New div HTML:', newP.innerHTML);
-                      console.log('[Marketo Forms] Recreated privacy div:', newP.textContent);
                     });
                   }, 500);
 
@@ -364,7 +326,6 @@ function initializeMarketoForms(api) {
 export default {
   name: "embedded-marketo-forms",
   initialize() {
-    console.log('[Marketo Forms] Initializer starting');
     withPluginApi("0.8", initializeMarketoForms);
   }
 };

@@ -44,7 +44,8 @@
       font-family: var(--font-family) !important;
       font-size: 16px !important;
       margin-top: 0.5em !important;
-      margin-bottom: 0.25em !important;
+      margin-bottom: 0 !important;
+      line-height: 1.2 !important;
     }
 
     // Style error messages
@@ -94,7 +95,7 @@
       box-shadow: none !important;
       font-family: var(--font-family) !important;
       display: block !important;
-      margin: 0 auto !important;
+      margin: -10px auto 0 auto !important;
 
       &:hover {
         background: var(--tertiary-hover) !important;

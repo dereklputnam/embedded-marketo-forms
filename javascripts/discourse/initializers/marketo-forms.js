@@ -266,18 +266,18 @@ function initializeMarketoForms(api) {
                   // Apply text fixes to remove line breaks in subtext
                   setTimeout(() => {
                     const formEl = form.getFormElem()[0];
-                    console.log('[Marketo Forms] DEBUG: Form element:', formEl);
-                    console.log('[Marketo Forms] DEBUG: Form HTML:', formEl.innerHTML);
 
-                    // Find all paragraph elements in the form and its parent
-                    const paragraphs = formEl.querySelectorAll('p');
-                    console.log('[Marketo Forms] DEBUG: Found paragraphs in form:', paragraphs.length);
+                    // Find the privacy div specifically (not a paragraph!)
+                    const privacyDiv = formEl.querySelector('#privacy');
+                    console.log('[Marketo Forms] DEBUG: Found privacy div:', privacyDiv);
 
-                    // Also search in the parent container
-                    const parentParagraphs = formEl.parentElement.querySelectorAll('p');
-                    console.log('[Marketo Forms] DEBUG: Found paragraphs in parent:', parentParagraphs.length);
+                    if (!privacyDiv) {
+                      console.log('[Marketo Forms] DEBUG: Privacy div not found, skipping');
+                      return;
+                    }
 
-                    paragraphs.forEach((p, index) => {
+                    const elements = [privacyDiv];
+                    elements.forEach((p, index) => {
                       console.log('[Marketo Forms] DEBUG: Processing paragraph', index);
                       console.log('[Marketo Forms] DEBUG: Original HTML:', p.innerHTML);
                       console.log('[Marketo Forms] DEBUG: Original text:', p.textContent);
@@ -288,12 +288,13 @@ function initializeMarketoForms(api) {
                       console.log('[Marketo Forms] DEBUG: Found links:', links.length);
                       console.log('[Marketo Forms] DEBUG: Text content:', textContent);
 
-                      // Hide the original paragraph
+                      // Hide the original div
                       p.style.display = 'none';
-                      console.log('[Marketo Forms] DEBUG: Hidden original paragraph');
+                      console.log('[Marketo Forms] DEBUG: Hidden original div');
 
-                      // Create a new clean paragraph
-                      const newP = document.createElement('p');
+                      // Create a new clean div
+                      const newP = document.createElement('div');
+                      newP.id = 'privacy';
                       newP.style.cssText = p.style.cssText;
                       newP.style.display = '';
 
@@ -318,11 +319,11 @@ function initializeMarketoForms(api) {
                         console.log('[Marketo Forms] DEBUG: Created paragraph without link');
                       }
 
-                      // Insert the new paragraph after the original
+                      // Insert the new div after the original
                       p.parentNode.insertBefore(newP, p.nextSibling);
-                      console.log('[Marketo Forms] DEBUG: Inserted new paragraph');
-                      console.log('[Marketo Forms] DEBUG: New paragraph HTML:', newP.innerHTML);
-                      console.log('[Marketo Forms] Recreated paragraph:', newP.textContent);
+                      console.log('[Marketo Forms] DEBUG: Inserted new div');
+                      console.log('[Marketo Forms] DEBUG: New div HTML:', newP.innerHTML);
+                      console.log('[Marketo Forms] Recreated privacy div:', newP.textContent);
                     });
                   }, 500);
 

@@ -197,6 +197,21 @@ function initializeMarketoForms(api) {
                       if (p.textContent.includes('\n')) {
                         p.textContent = p.textContent.replace(/\n/g, ' ');
                       }
+
+                      // Force width properties to prevent wrapping
+                      p.style.setProperty('white-space', 'nowrap', 'important');
+                      p.style.setProperty('width', 'max-content', 'important');
+                      p.style.setProperty('max-width', 'none', 'important');
+                      p.style.setProperty('overflow', 'visible', 'important');
+
+                      // Force overflow visible on all parent containers
+                      let parent = p.parentElement;
+                      while (parent && parent !== formEl) {
+                        parent.style.setProperty('overflow', 'visible', 'important');
+                        parent = parent.parentElement;
+                      }
+                      formEl.style.setProperty('overflow', 'visible', 'important');
+
                       console.log('[Marketo Forms] Lightbox processed paragraph:', p.textContent);
                     });
                   }, 100);
@@ -254,6 +269,21 @@ function initializeMarketoForms(api) {
                       if (p.textContent.includes('\n')) {
                         p.textContent = p.textContent.replace(/\n/g, ' ');
                       }
+
+                      // Force width properties to prevent wrapping
+                      p.style.setProperty('white-space', 'nowrap', 'important');
+                      p.style.setProperty('width', 'max-content', 'important');
+                      p.style.setProperty('max-width', 'none', 'important');
+                      p.style.setProperty('overflow', 'visible', 'important');
+
+                      // Force overflow visible on all parent containers
+                      let parent = p.parentElement;
+                      while (parent && parent !== formEl) {
+                        parent.style.setProperty('overflow', 'visible', 'important');
+                        parent = parent.parentElement;
+                      }
+                      formEl.style.setProperty('overflow', 'visible', 'important');
+
                       console.log('[Marketo Forms] Processed paragraph:', p.textContent);
                     });
                   }, 100);
